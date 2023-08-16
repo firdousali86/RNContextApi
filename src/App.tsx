@@ -9,11 +9,8 @@ import {MyContextProvider, useMyContext} from './contexts/MyContext';
 
 const Stack = createNativeStackNavigator();
 
-function App(): JSX.Element {
-
-  // const {isLogin, updateData} = useMyContext();
+const Nav = () => {
   const {isLogin} = useMyContext();
-  
 
   const getAuthStack = () => {
     return (
@@ -36,11 +33,19 @@ function App(): JSX.Element {
   };
 
   return (
+    <Stack.Navigator>
+      {isLogin ? getMainStack() : getAuthStack()}
+    </Stack.Navigator>
+  );
+};
+
+function App(): JSX.Element {
+  // const {isLogin, updateData} = useMyContext();
+
+  return (
     <MyContextProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          {isLogin ? getMainStack() : getAuthStack()}
-        </Stack.Navigator>
+        <Nav />
       </NavigationContainer>
     </MyContextProvider>
   );
